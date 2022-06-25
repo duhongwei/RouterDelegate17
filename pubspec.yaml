@@ -1,7 +1,7 @@
 name: router_delegate17
 description: A subclass of routerDelegate.
-version: 0.1.0
-homepage:
+version: 0.0.1
+repository: https://github.com/duhongwei/RouterDelegate17
 
 environment:
   sdk: ">=2.16.2 <3.0.0"

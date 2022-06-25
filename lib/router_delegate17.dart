@@ -1,7 +1,6 @@
 library router_delegate17;
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class RouterDelegate17 extends RouterDelegate<RouteSettings>
@@ -15,7 +14,8 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
 
   final Duration exitDelay;
   final ExitCount exitCount;
-  RouterDelegate17({this.exitDelay = const Duration(seconds: 2)}):exitCount=ExitCount(delay:exitDelay );
+  RouterDelegate17({this.exitDelay = const Duration(seconds: 2)})
+      : exitCount = ExitCount(delay: exitDelay);
 
   NavSettings get currentNavSettings => _settingsList.last;
   NavSettings? get previousNavSettings {
@@ -46,10 +46,6 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
         routeSettings: routeSettings);
     currentNavSettings.status.value = PageStatus.enter;
     return result;
-  }
-
-  void closeModalRoute<T extends Object?>([T? result]) {
-    navigatorKey?.currentState?.pop<T>(result);
   }
 
   Future<T?> openModalBottomSheet<T>({
@@ -181,9 +177,9 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
 
 enum PageStatus {
   none,
-  // 被别的页面挡住。
+  // hide by other page
   leave,
-  // 成为顶层页面。
+  // is top most page
   enter
 }
 
