@@ -47,6 +47,6 @@ RouterDelegate17 是 RouterDelegate 的子类。就是帮你实现的必要的�
 为了简化逻辑，方便使用，RouterDelegate17 暂时并不支持 web 开发。
 
 ## 效果
-动图为 example 文件中的 main.dart的运行效果 
+动图为 example 文件中的 main.dart的运行效果 ,因为动画有点大，为了不影响前面正文的展示，放在最后。
 
 <img src="https://github.com/duhongwei/RouterDelegate17/main/image/sample.gif" width="300" />
