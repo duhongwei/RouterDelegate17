@@ -29,6 +29,10 @@ class _PageAState extends State<PageA> {
         if (exitCount == 2) {
           countText = '在首页按 back 键 $exitCount 次';
         }
+        //2 秒内如果一直按会一直增加。
+        else{
+          countText = '在首页按 back 键 $exitCount 次';
+        }
       });
     });
     super.initState();
@@ -37,7 +41,7 @@ class _PageAState extends State<PageA> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('page A')),
+      appBar: AppBar(title: const Text('页面 A')),
       body: Column(children: [
         ValueListenableBuilder(
             valueListenable: routerDelegate.currentNavSettings.status,
@@ -51,7 +55,7 @@ class _PageAState extends State<PageA> {
               resultB = '页面B pop 后的返回值 $resultB';
               setState(() {});
             },
-            child: const Text('goto pageB')),
+            child: const Text('显示页面B',style: buttonTextStyle,)),
         StatusText(text: resultB ?? '暂无上层页面返回值'),
         StatusText(text: countText)
       ]),

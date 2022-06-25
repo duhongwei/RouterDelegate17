@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'flutter RouteDelegate17 demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      
+        ),
       home: Router(
           routerDelegate: routerDelegate,
           backButtonDispatcher: RootBackButtonDispatcher()),

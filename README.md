@@ -1,5 +1,10 @@
 RouterDelegate17 是 RouterDelegate 的子类。用 Navgator2.0 实现的了 push,pop,replace 的方法。与 Navgator1.0不同的是，可以方便的跳转到页面栈中的任意页面。 
 
+## 演示
+动图为 example 文件中的 main.dart的运行效果。
+
+<img src="https://github.com/duhongwei/RouterDelegate17/main/image/sample.gif"/>
+
 ## 功能
 1. `Future<T?> push<T>(Page<T> page)` 页面入栈。如果待入栈的页面已经存在，上面的页面全部弹出。也就是说可以跳转到栈中任意页面。
 2. `bool pop<T extends Object>` 栈顶的页面出栈。
@@ -46,7 +51,3 @@ RouterDelegate17 是 RouterDelegate 的子类。就是帮你实现的必要的�
 
 为了简化逻辑，方便使用，RouterDelegate17 暂时并不支持 web 开发。
 
-## 效果
-动图为 example 文件中的 main.dart的运行效果 ,因为动画有点大，为了不影响前面正文的展示，放在最后。
-
-<img src="https://github.com/duhongwei/RouterDelegate17/main/image/sample.gif" width="300" />
