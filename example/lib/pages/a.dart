@@ -14,12 +14,21 @@ class PageA extends StatefulWidget {
 class _PageAState extends State<PageA> {
   dynamic resultB;
   int exitCount = 0;
+  String countText = '';
   @override
   void initState() {
     //如果是 android 按物理返回键
     routerDelegate.exitCount.addListener(() {
       setState(() {
         exitCount = routerDelegate.exitCount.value;
+        //实际应用中这里给出警告。 2 秒后 exitCount= 恢复为 0
+        if (exitCount == 1) {
+          countText = '在首页按 back 键 $exitCount 次';
+        }
+        //实际应用中这里执行退出程序操作。 2 秒后 exitCount= 恢复为 1
+        if (exitCount == 2) {
+          countText = '在首页按 back 键 $exitCount 次';
+        }
       });
     });
     super.initState();
@@ -28,7 +37,7 @@ class _PageAState extends State<PageA> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:const Text('page A')),
+      appBar: AppBar(title: const Text('page A')),
       body: Column(children: [
         ValueListenableBuilder(
             valueListenable: routerDelegate.currentNavSettings.status,
@@ -37,12 +46,14 @@ class _PageAState extends State<PageA> {
             }),
         ElevatedButton(
             onPressed: () async {
-              resultB = await routerDelegate.push(const MaterialPage(child: PageB()));
+              resultB =
+                  await routerDelegate.push(const MaterialPage(child: PageB()));
+              resultB = '页面B pop 后的返回值 $resultB';
               setState(() {});
             },
-            child:const Text('goto pageB')),
-        StatusText(text: resultB ?? 'no return value'),
-        StatusText(text: exitCount.toString())
+            child: const Text('goto pageB')),
+        StatusText(text: resultB ?? '暂无上层页面返回值'),
+        StatusText(text: countText)
       ]),
     );
   }

@@ -1,6 +1,6 @@
 RouterDelegate17 是 RouterDelegate 的子类。用 Navgator2.0 实现的了 push,pop,replace 的方法。与 Navgator1.0不同的是，可以方便的跳转到页面栈中的任意页面。 
 
-## Features
+## 功能
 1. `Future<T?> push<T>(Page<T> page)` 页面入栈。如果待入栈的页面已经存在，上面的页面全部弹出。也就是说可以跳转到栈中任意页面。
 2. `bool pop<T extends Object>` 栈顶的页面出栈。
 3. `Future<T?> replace<T, TO>(Page<T> page, {TO? result})` 页面替换。如果新页面在栈中已经存在，则栈顶的页面全部弹出。
@@ -9,7 +9,7 @@ RouterDelegate17 是 RouterDelegate 的子类。用 Navgator2.0 实现的了 pus
 一般2秒（默认）内连按两次就需要退出程序。按一次可以 toast 通知。
 6. openDialog。 对 showDialog 的包装，为了让 dialog下面的页面可以及时修改`PageStatus`，如果直接调用 showDialog，dialog下面的页面不会改变状态。
 7. openModalBottomSheet 对 showModalBottomSheet 的包装，为了让 ModalBottomSheet 下面的页面可以及时修改`PageStatus`。如果直接调用  showModalBottomSheet，ModalBottomSheet 下面的页面不会改变状态。
-## Usage
+## 使用
 
 1. 安装
 `flutte pub get router_delegate17`
@@ -38,10 +38,15 @@ Widget build(BuildContext context) {
 4. 在页面 C 中可以直接回到 页面A `routerDelegate.push(PageA())`
 5. 在跳转的时候页面上会显示页面当前的状态。
 
-其它的演示效果直接看完整示例吧，在这里。
+其它的演示效果直接看完整示例吧，在这里 https://github.com/duhongwei/RouterDelegate17/tree/main/example 。
 
-## Additional information
+## 补充
 
 RouterDelegate17 是 RouterDelegate 的子类。就是帮你实现的必要的方法，方便使用。
 
 为了简化逻辑，方便使用，RouterDelegate17 暂时并不支持 web 开发。
+
+## 效果
+动图为 example 文件中的 main.dart的运行效果 
+
+<img src="https://github.com/duhongwei/RouterDelegate17/main/image/sample.gif" width="300" />
