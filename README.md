@@ -3,7 +3,7 @@ RouterDelegate17 是 RouterDelegate 的子类。用 Navgator2.0 实现的了 pus
 ## 演示
 动图为 example 文件中的 main.dart的运行效果。
 
-<img src="https://github.com/duhongwei/RouterDelegate17/blob/main/img/demo.gif"/>
+<img src="https://raw.githubusercontent.com/duhongwei/RouterDelegate17/main/img/demo.gif"/>
 
 ## 功能
 1. `Future<T?> push<T>(Page<T> page)` 页面入栈。如果待入栈的页面已经存在，上面的页面全部弹出。也就是说可以跳转到栈中任意页面。

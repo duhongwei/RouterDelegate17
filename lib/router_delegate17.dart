@@ -262,17 +262,19 @@ class ExitCount extends ChangeNotifier {
     });
   }
 }
+
 /// 路由配置
-/// 
+///
 /// 虽然没有设置为私有，这个类基本上是专为 [RouterDelegate17] 准备的。
 class NavSettings<T> {
   /// 页面
-  /// 
+  ///
   /// 一般来说 page 是 [MaterialPage] 或 [CupertinoPage] 实例。
   final dynamic page;
 
   /// 每个页面都会有一个 completer
   final Completer<T> completer;
+
   /// 页面状态
   final status = ValueNotifier<PageStatus>(PageStatus.none);
   NavSettings({required this.page, required this.completer});
