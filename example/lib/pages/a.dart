@@ -21,16 +21,16 @@ class _PageAState extends State<PageA> {
     routerDelegate.exitCount.addListener(() {
       setState(() {
         exitCount = routerDelegate.exitCount.value;
-        //实际应用中这里给出警告。 2 秒后 exitCount= 恢复为 0
+        //实际应用中这里给出警告。 2 秒后 exitCount 恢复为 0
         if (exitCount == 1) {
           countText = '在首页按 back 键 $exitCount 次';
         }
-        //实际应用中这里执行退出程序操作。 2 秒后 exitCount= 恢复为 1
+        //实际应用中这里执行退出程序操作。 2 秒后 exitCount 恢复为 1
         if (exitCount == 2) {
           countText = '在首页按 back 键 $exitCount 次';
         }
         //2 秒内如果一直按会一直增加。
-        else{
+        else {
           countText = '在首页按 back 键 $exitCount 次';
         }
       });
@@ -53,9 +53,14 @@ class _PageAState extends State<PageA> {
               resultB =
                   await routerDelegate.push(const MaterialPage(child: PageB()));
               resultB = '页面B pop 后的返回值 $resultB';
-              setState(() {});
+              if (mounted) {
+                setState(() {});
+              }
             },
-            child: const Text('显示页面B',style: buttonTextStyle,)),
+            child: const Text(
+              '显示页面B',
+              style: buttonTextStyle,
+            )),
         StatusText(text: resultB ?? '暂无上层页面返回值'),
         StatusText(text: countText)
       ]),
