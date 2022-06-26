@@ -16,8 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'flutter RouteDelegate17 demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      
-        ),
+      ),
       home: Router(
           routerDelegate: routerDelegate,
           backButtonDispatcher: RootBackButtonDispatcher()),
