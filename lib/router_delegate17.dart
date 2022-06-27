@@ -164,7 +164,10 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
     var index = _settingsList.indexOf(setttings);
 
     if (index > -1) {
-      _settingsList.removeRange(index + 1, _settingsList.length);
+      var length = _settingsList.length;
+      while (--length > index) {
+        _settingsList.removeLast().completer.complete();
+      }
       currentNavSettings.status.value = PageStatus.enter;
     } else {
       currentNavSettings.status.value = PageStatus.leave;
@@ -177,8 +180,8 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
   /// [page]是新页面，新页面的状态为 [PageStatus.none]
   /// [page]老页面,在栈中已经存在。[page]上面的所有页面出栈。[page]的状态为 [PageStatus.enter]
   Future<T?> push<T>(Page<T> page) {
-    //如果已存在，那么 上面的全弹出。
     assert(_settingsList.isNotEmpty);
+    //如果已存在，那么 上面的全弹出。
     _ensureOne<T>(page);
     notifyListeners();
     return currentNavSettings.completer.future as Future<T?>;
