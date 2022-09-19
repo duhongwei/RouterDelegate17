@@ -25,9 +25,12 @@ RouterDelegate17 是 RouterDelegate 的子类。用 Navgator2.0 实现的了 pus
 ```dart
 import 'package:flutter/material.dart';
 import 'package:router_delegate17/router_delegate17.dart';
+import 'package:example/pages/a.dart';
+
+final routerDelegate = RouterDelegate17();
 
 void main() async {
-  await app.init(pages: [MaterialPage(child: PageA())]);
+  await routerDelegate.setInitialPages([const MaterialPage(child: PageA())]);
   runApp(const MyApp());
 }
 Widget build(BuildContext context) {
