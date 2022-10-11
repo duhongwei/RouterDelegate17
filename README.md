@@ -1,57 +1,24 @@
-RouterDelegate17 是 RouterDelegate 的子类。用 Navgator2.0 实现的了 push,pop,replace 的方法。与 Navgator1.0不同的是，可以方便的跳转到页面栈中的任意页面,还有页面状态监听的功能。 
 
-## 演示
-动图为 example 文件中的 main.dart的运行效果。
+
+RouterDelegate17 is a subclass of RouterDelegate. Implemented push,pop,replace methods with Navgator2.0. Different from Navgator 1.0, it can easily jump to any page in the page stack, as well as the function of page status monitoring. Support android, ios.
+
+[中文](https://github.com/duhongwei/RouterDelegate17/blob/main/README_CN.md)
+
+## Demo
+The animation shows the running effect of main.dart in the example file.
 
 <img src="https://raw.githubusercontent.com/duhongwei/RouterDelegate17/main/img/demo.gif"/>
 
-## 功能
-1. `Future<T?> push<T>(Page<T> page)` 页面入栈。如果待入栈的页面已经存在，上面的页面全部弹出。也就是说可以跳转到栈中任意页面。
-2. `bool pop<T extends Object>` 栈顶的页面出栈。
-3. `Future<T?> replace<T, TO>(Page<T> page, {TO? result})` 页面替换。如果新页面在栈中已经存在，则栈顶的页面全部弹出。
-4. 页面状态监控。比如 A,B，二个页面。栈中有 A 页面， B 入栈，A 页面响应 `PageStatus.leave`，因为此时 A 页面被 B 页面覆盖了。B 页面 弹出 A 页面响应 `PageStatus.enter` 方法，因为 此时 A 页面又重新显示了。如果页面是首次入栈，页面的状态是 `PageStatus.none`
-5. 退出程序监控。每当要退出首页（比如在首页按物理退出键）都会记录下来，并报告次数。
-一般2秒（默认）内连按两次就需要退出程序。按一次可以 toast 通知。
-6. openDialog。 对 showDialog 的包装，为了让 dialog下面的页面可以及时修改`PageStatus`，如果直接调用 showDialog，dialog下面的页面不会改变状态。
-7. openModalBottomSheet 对 showModalBottomSheet 的包装，为了让 ModalBottomSheet 下面的页面可以及时修改`PageStatus`。如果直接调用  showModalBottomSheet，ModalBottomSheet 下面的页面不会改变状态。
+## Introduction
+1. `Future<T?> push<T>(Page<T> page)` The page is pushed onto the stack. If the page to be pushed into the stack already exists, all the above pages will be popped up. That is to say, you can jump to any page in the stack.
+2. `bool pop<T extends Object>` The page at the top of the stack is popped.
+3. `Future<T?> replace<T, TO>(Page<T> page, {TO? result})` page replacement. If the new page already exists in the stack, all the pages at the top of the stack are popped.
+4. Page status monitoring.
+5. Exit program monitoring. Whenever you want to exit the home page (such as pressing the physical exit button on the home page), it will be recorded and the number of times will be reported.
+6. openDialog. Wrapping showDialog, in order to allow the page below dialog to modify `PageStatus` in time, if showDialog is called directly, the page below dialog will not change the state.
+7. openModalBottomSheet. Wrapping showModalBottomSheet, so that the page under ModalBottomSheet can modify `PageStatus` in time. If you call showModalBottomSheet directly, the page below ModalBottomSheet will not change state.
 
-## 使用
+## Usage
 
-1. 安装
-`flutte pub get router_delegate17`
-2. 为了方便说明，生成一个全局变量 `routerDelegate = RouterDelegate17()`，一个页面 PageA,一个页面PageB
-在 main.dart 中，初始化首页。
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:router_delegate17/router_delegate17.dart';
-
-void main() async {
-  await app.init(pages: [MaterialPage(child: PageA())]);
-  runApp(const MyApp());
-}
-Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter template',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Router(
-        routerDelegate: routerDelegate,
-        backButtonDispatcher: RootBackButtonDispatcher(),
-      ),
-    );
-  }
-```
-
-3. PageA 跳转 PageB `routerDelegate.push(const MaterialPage(child: PageB())`
-4. 在跳转的时候页面上会显示页面当前的状态。
-
-很简单吧~
-
-完整示例，在这里 https://github.com/duhongwei/RouterDelegate17/tree/main/example 。
-
-## 补充
-
-为了简化逻辑，方便使用，RouterDelegate17 暂时并不支持 web 开发。
+Full example, here: [https://github.com/duhongwei/RouterDelegate17/tree/main/example](https://github.com/duhongwei/RouterDelegate17/tree/main/example) 。
 

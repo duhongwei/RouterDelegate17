@@ -8,48 +8,50 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// 路由管理
+/// route management
 ///
-/// 在使用其它方法之前，必须首先调用 [setInitialPages] 设置初始页面。初始页面可以有多个。
+/// Jump to the page to call the [push] method.
+/// To popup page call the [pop] method. You can also use [Navigator] to pop up the page directly, both methods can take return values.
 ///
-/// 跳转到页面调用  [push] 方法
+/// [replace] method replace the current page.
 ///
-/// 弹出页面调用 [pop] 方法。 也可以用 [Navigator] 直接弹出页面，两种方法都可以带返回值
-/// ```dart
-/// Navigator.of(context)pop()`
-/// ```
-/// [replace] 方法 替换当前页面。
+/// In the page you can get the status of the page [PageStatus]. All pages are managed with stacks. The new page status is [PageStatus.none].
+/// The status of the page below the new page changes to [PageStatus.leave]. After the upper page pops up, the status of the lower page is [Page.enter].
 ///
-/// 在页面中可以获取页面的状态 [PageStatus]。所有页面是用栈管理的。新页面入栈状态为 [PageStatus.none]。
-/// 新页面下面的页面的状态变为 [PageStatus.leave]。上面的页面弹出后，下面的页面的状态为 [Page.enter]。
+/// There are two ways to show the dialog [showDialog], [openDialog]. [openDialog] is a wrapper for [showDialog].
+/// Use [openDialog] to change the state of the following page. Popup dialog with [Navigator.pop].
 ///
-/// 有两种方法可以显示对话框 [showDialog],[openDialog]。[openDialog] 是 [showDialog]的包装。
-/// 使用 [openDialog] 可以改变下面页面的状态。弹出对话框用 [Navigator.pop]
+/// There are two ways to show bottomSheet [showModalBottomSheet],[openModalBottomSheet]. [openModalBottomSheet] is a wrapper for [showModalBottomSheet].
+/// Use [openModalBottomSheet] to change the state of the following page. Pop the bottomSheet with [Navigator.pop]
 ///
-/// 有两种方法可以显示 bottomSheet [showModalBottomSheet],[openModalBottomSheet]。[openModalBottomSheet] 是 [showModalBottomSheet]的包装。
-/// 使用 [openModalBottomSheet] 可以改变下面页面的状态。 弹出 bottomSheet 用 [Navigator.pop]
-///
-/// 混入 [PopNavigatorRouterDelegateMixin] 增加物理返回键的处理
+/// Mix in [PopNavigatorRouterDelegateMixin] to increase the handling of physical return keys
 class RouterDelegate17 extends RouterDelegate<RouteSettings>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteSettings> {
-  /// 取消退出程序延时时间
+
+  /// Cancel Exit Program duration
   final Duration exitDelay;
 
-  /// 退出程序请求次数
+  /// Number of requests to quit the program
   final ExitCount exitCount;
 
-  /// 创建RouterDelegate17实例
+  /// Create RouterDelegate17 instance
   ///
-  /// 取消退出程序延时时间默认为 2秒
-  RouterDelegate17({this.exitDelay = const Duration(seconds: 2)})
-      : exitCount = ExitCount(delay: exitDelay);
-
-  /// 当前路由的配置信息
+  /// Cancel exit program duration defaults to 2 seconds
+  /// [initialPages] is the initial page list and cannot be empty. Typically consists of [MaterialPage] or [CupertinoPage] instances.
+  RouterDelegate17(List<Page> initialPages,
+      {this.exitDelay = const Duration(seconds: 2)})
+      : exitCount = ExitCount(delay: exitDelay) {
+    assert(initialPages.isNotEmpty,'The initial page cannot be empty!');
+    for (var page in initialPages) {
+      _settingsList.add(NavSettings.fromPage(page));
+    }
+  }
+  /// Configuration information of the current route
   NavSettings get currentNavSettings => _settingsList.last;
 
-  /// 打开对话框
+  /// Open dialog
   ///
-  /// [showModalBottomSheet]的包装。包装的目的是为了让下面的页面可以随着对话框的打开和状态而改变状态
+  /// Wrapper for [showModalBottomSheet]. The purpose of the wrapper is to allow the following page to change state as the dialog opens and states.
   Future<T?> openDialog<T>({
     required BuildContext context,
     required WidgetBuilder builder,
@@ -74,9 +76,9 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
     return result;
   }
 
-  /// 打开模态 bottomSheet
+  /// open modal bottomSheet
   ///
-  ///  [showModalBottomSheet]的包装。包装的目的是为了让下面的页面可以随着对话框的打开和状态而改变状态
+  /// Wrapper for [showModalBottomSheet]. The purpose of the wrapper is to allow the following page to change state as the dialog opens and states. 
   Future<T?> openModalBottomSheet<T>({
     required BuildContext context,
     required WidgetBuilder builder,
@@ -149,15 +151,6 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
   @override
   Future<void> setNewRoutePath(RouteSettings configuration) async {}
 
-  /// 设置初始页面
-  ///
-  /// 必须在其它方法之前调用。
-  /// [pages]一般来说由 [MaterialPage] 或 [CupertinoPage] 实例组成。
-  setInitialPages<T>(List<Page> pages) {
-    for (var page in pages) {
-      _settingsList.add(NavSettings.fromPage(page));
-    }
-  }
 
   _ensureOne<T>(Page<T> page) {
     var setttings = NavSettings.fromPage(page);
@@ -175,26 +168,26 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
     }
   }
 
-  /// 跳转到[page]
+  /// Jump to `Page`
   ///
-  /// [page]是新页面，新页面的状态为 [PageStatus.none]
-  /// [page]老页面,在栈中已经存在。[page]上面的所有页面出栈。[page]的状态为 [PageStatus.enter]
+  /// If `page` is a new page, the status of the new page is [PageStatus.none].
+  /// if `page` is an old page, which already exists on the stack. All pages above `page` are popped. The status of `page` is [PageStatus.enter].
   Future<T?> push<T>(Page<T> page) {
     assert(_settingsList.isNotEmpty);
-    //如果已存在，那么 上面的全弹出。
+    // If `page` already exists, then the full above `page` pops up.
     _ensureOne<T>(page);
     notifyListeners();
     return currentNavSettings.completer.future as Future<T?>;
   }
 
-  /// 页面出栈
+  /// page pop
   ///
-  /// 如果是调用
+  /// You can also use the navigator to pop up the page
   /// ```dart
   /// Navigator.of(context)pop()`
   /// ```
-  /// [Navigator.onPopPage] 会响应这个请求，然后调用 [pop]来处理。殊途同归。
-  /// [result] 是可选的返回值，页面弹出的时候返回给调用者。
+  /// [Navigator.onPopPage] will respond to this request and then call [pop] to handle it. Same way.
+  /// `result` is an optional return value, which is returned to the caller when the page pops up.
   bool pop<T extends Object>([T? result]) {
     if (_settingsList.length < 2) {
       return false;
@@ -208,10 +201,9 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
     return true;
   }
 
-  /// 用[page]替换当前页面
+  /// Replace current page with `page`
   ///
-  /// 当前页面出栈。把 [result] 返回给调用者。
-  /// 执行 [push] 方法 [page] 入栈
+  /// The current page is popped from the stack. Return [result] to the caller. Call [push] method  push `page` to the stack.
   Future<T?> replace<T, TO>(Page<T> page, {TO? result}) {
     assert(_settingsList.isNotEmpty);
     var last = _settingsList.removeLast();
@@ -225,22 +217,22 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
   final List<NavSettings> _settingsList = [];
 }
 
-/// 页面状态
+
 enum PageStatus {
-  /// 新入栈
+  /// new page
   none,
 
-  /// 不再是顶层页面，被新页面（对话框）遮挡。
+  /// No longer a top-level page, obscured by a new page or a dialog.
   leave,
 
-  /// 重新成为顶层页面。
+  /// Re-become top-level page
   enter
 }
 
-/// 退出程序请求计次
+/// Exit program request count.
 ///
-/// 和普通的计次不同，每次增加次数后 [delay] 时间后都会被减掉。
-/// 应用程序可以监听 [value] 的变化来决定是否要退出程序。
+/// Different from the normal count, the [delay] will be subtracted after each increase of the count.
+/// The application can listen for changes in [value] to decide whether to exit the program.
 /// ```dart
 /// var exitCount = ExitCount()
 /// exitCount.addListener(() {
@@ -250,7 +242,7 @@ enum PageStatus {
 class ExitCount extends ChangeNotifier {
   int _value = 0;
 
-  /// 增加的次数在 [delay] 时间后会被减掉。
+  /// The added times will be subtracted after the [delay].
   final Duration delay;
 
   ExitCount({required this.delay});
@@ -266,23 +258,21 @@ class ExitCount extends ChangeNotifier {
   }
 }
 
-/// 路由配置
-///
-/// 虽然没有设置为私有，这个类基本上是专为 [RouterDelegate17] 准备的。
+/// routing configuration
 class NavSettings<T> {
-  /// 页面
+  /// page
   ///
-  /// 一般来说 page 是 [MaterialPage] 或 [CupertinoPage] 实例。
+  /// Typically page is an instance of [MaterialPage] or [CupertinoPage].
   final dynamic page;
 
-  /// 每个页面都会有一个 completer
+  /// Each page will have a completer
   final Completer<T> completer;
 
-  /// 页面状态
+  /// page status
   final status = ValueNotifier<PageStatus>(PageStatus.none);
   NavSettings({required this.page, required this.completer});
 
-  /// 以 page 为基础创建 NavSettings 实例
+  /// Create NavSettings instance based on page
   factory NavSettings.fromPage(Page<T> page) {
     return NavSettings<T>(page: page, completer: Completer<T>());
   }

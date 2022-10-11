@@ -32,7 +32,7 @@ class _PageBState extends State<PageB> {
                       height: 200,
                       child: ElevatedButton(
                         child: const Text(
-                          '关闭',
+                          'close',
                           style: buttonTextStyle,
                         ),
                         onPressed: () {
@@ -41,10 +41,10 @@ class _PageBState extends State<PageB> {
                       ),
                     ));
                   });
-              devPrint('dialog 返回值是  $result');
+              devPrint('dialog return value is $result');
             },
             child: const Text(
-              '显示对话框',
+              'show dialog',
               style: buttonTextStyle,
             )),
         const SizedBox(
@@ -55,7 +55,7 @@ class _PageBState extends State<PageB> {
               routerDelegate.pop(DateTime.now().second.toString());
             },
             child: const Text(
-              '弹出页面B',
+              'pop page B',
               style: buttonTextStyle,
             ))
       ]),

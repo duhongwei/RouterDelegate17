@@ -17,21 +17,23 @@ class _PageAState extends State<PageA> {
   String countText = '';
   @override
   void initState() {
-    //如果是 android 按物理返回键
+    
     routerDelegate.exitCount.addListener(() {
       setState(() {
         exitCount = routerDelegate.exitCount.value;
-        //实际应用中这里给出警告。 2 秒后 exitCount 恢复为 0
+        // A warning is given here in practical applications. 
+        // exitCount returns to 0 after 2 seconds.
         if (exitCount == 1) {
-          countText = '在首页按 back 键 $exitCount 次';
+          countText = 'Press the back key $exitCount times on the home page';
         }
-        //实际应用中这里执行退出程序操作。 2 秒后 exitCount 恢复为 1
+        // In practical applications, the exit program operation is performed here. 
+        //exitCount returns to 1 after 2 seconds.
         if (exitCount == 2) {
-          countText = '在首页按 back 键 $exitCount 次';
+          countText = 'Press the back key $exitCount times on the home page';
         }
-        //2 秒内如果一直按会一直增加。
+        // If you keep pressing within 2 seconds, it will keep increasing.
         else {
-          countText = '在首页按 back 键 $exitCount 次';
+          countText = 'Press the back key $exitCount times on the home page';
         }
       });
     });
@@ -41,7 +43,7 @@ class _PageAState extends State<PageA> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('页面 A')),
+      appBar: AppBar(title: const Text('Page A')),
       body: Column(children: [
         ValueListenableBuilder(
             valueListenable: routerDelegate.currentNavSettings.status,
@@ -52,16 +54,16 @@ class _PageAState extends State<PageA> {
             onPressed: () async {
               resultB =
                   await routerDelegate.push(const MaterialPage(child: PageB()));
-              resultB = '页面B pop 后的返回值 $resultB';
+              resultB = 'Return value  $resultB after page B pop';
               if (mounted) {
                 setState(() {});
               }
             },
             child: const Text(
-              '显示页面B',
+              'Show PageB',
               style: buttonTextStyle,
             )),
-        StatusText(text: resultB ?? '暂无上层页面返回值'),
+        StatusText(text: resultB ?? 'No upper page return value'),
         StatusText(text: countText)
       ]),
     );

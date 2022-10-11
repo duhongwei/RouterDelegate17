@@ -1,9 +1,7 @@
 import 'package:example/app.dart';
-import 'package:example/pages/a.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  await routerDelegate.setInitialPages([const MaterialPage(child: PageA())]);
   runApp(const MyApp());
 }
 
