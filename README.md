@@ -20,5 +20,5 @@ The animation shows the running effect of main.dart in the example file.
 
 ## Usage
 
-Full example, here: [https://github.com/duhongwei/RouterDelegate17/tree/main/example](https://github.com/duhongwei/RouterDelegate17/tree/main/example) 。
+Full example, here: [https://github.com/duhongwei/RouterDelegate17/tree/main/example](https://github.com/duhongwei/RouterDelegate17/tree/main/example).
 
