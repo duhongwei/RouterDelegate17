@@ -1,6 +1,6 @@
 // Copyright 2022 duhongwei. All rights reserved.
 // Use of this source code is governed by a MIT license that can be
-// found in the LICENSE file
+// found in the LICENSE file.
 
 library router_delegate17;
 
@@ -37,7 +37,7 @@ class RouterDelegate17 extends RouterDelegate<RouteSettings>
   /// Create RouterDelegate17 instance
   ///
   /// Cancel exit program duration defaults to 2 seconds
-  /// [initialPages] is the initial page list and cannot be empty. Typically consists of [MaterialPage] or [CupertinoPage] instances.
+  /// `initialPages` is the initial page list and cannot be empty. Typically consists of [MaterialPage] or [CupertinoPage] instances.
   RouterDelegate17(List<Page> initialPages,
       {this.exitDelay = const Duration(seconds: 2)})
       : exitCount = ExitCount(delay: exitDelay) {
